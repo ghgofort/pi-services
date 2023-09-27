@@ -10,8 +10,9 @@ const routes = require('./routes');
 const express = require('express'); 
 // Create an instance of express.
 const app = express();
+// Start the server.
+app.listen(3000, () => console.log('Example app listening on port 3000!'));
 
-// Setup the routes for the application.
 app.use('/', routes);
 
 module.exports = app;
