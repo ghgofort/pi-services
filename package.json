@@ -4,6 +4,7 @@
   "description": "Services for getting data from Firestore database where they are stored from Raspberry Pi devices connected to sensors via GPIO pins.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
