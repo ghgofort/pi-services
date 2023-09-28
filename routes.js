@@ -6,9 +6,17 @@ router.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-router.get('/hpt', (req, res) => {
+
+/** API endpoint for getting all items in the HPT_Readings collection. */
+router.get('/hpt', (req, res, next) => {
    const firebaseService = require('./services/firebaseService');
-   res.send(firebaseService.hpt());
+   firebaseService.hpt().then((data) => {;
+      res.send(data);
+  }).catch((e) => {
+      console.log(e);
+  }).finally(() => {
+      next();
+  });
 });
 
 module.exports = router;
