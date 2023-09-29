@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 router.get('/hpt', (req, res, next) => {
    const firebaseService = require('./services/firebaseService');
    firebaseService.hpt().then((data) => {;
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Origin', 'https://localhost:3000, https://galengoforth.com');
       res.setHeader('Access-Control-Allow-Methods', 'GET');
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
       res.send(data);
