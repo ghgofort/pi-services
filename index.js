@@ -11,7 +11,7 @@ const express = require('express');
 // Create an instance of express.
 const app = express();
 // Start the server.
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.listen(3000, () => console.log('App Started...'));
 
 app.use('/', routes);
 
