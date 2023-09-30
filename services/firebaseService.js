@@ -22,7 +22,8 @@ async function hpt() {
     // Get data from Firestore database & send it to the client.
     try {
         const hptRef = collection(db, 'HPT_Readings');
-        const hptSnapshot = await getDocs(hptRef);
+        const q = query(hptRef, orderBy('dateTimeCreated', 'desc'));
+        const hptSnapshot = await getDocs(q);
         hptSnapshot.forEach(doc => {
             response.push(doc.data());
         });
