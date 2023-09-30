@@ -10,7 +10,7 @@
  */
 async function hpt() {
     // Initialize the firestore DB.
-    const { collection, getDocs, getFirestore } = require('firebase/firestore');
+    const { collection, getDocs, getFirestore, limit, orderBy, query } = require('firebase/firestore');
     const hptConfig = require('./hpt-config.json');
     const { initializeApp } = require('firebase/app');
     hptConfig.apiKey = process.env.FB_API_KEY;
@@ -22,6 +22,7 @@ async function hpt() {
     // Get data from Firestore database & send it to the client.
     try {
         const hptRef = collection(db, 'HPT_Readings');
+        const q = query(hptRef, orderBy('dateTimeCreated', 'desc'), limit(10));
         const hptSnapshot = await getDocs(hptRef);
         hptSnapshot.forEach(doc => {
             response.push(doc.data());
