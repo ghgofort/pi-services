@@ -23,7 +23,7 @@ async function hpt() {
     try {
         const hptRef = collection(db, 'HPT_Readings');
         const q = query(hptRef, orderBy('dateTimeCreated', 'desc'), limit(10));
-        const hptSnapshot = await getDocs(hptRef);
+        const hptSnapshot = await getDocs(q);
         hptSnapshot.forEach(doc => {
             response.push(doc.data());
         });
