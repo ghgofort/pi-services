@@ -8,7 +8,7 @@
  * This function is responsible for getting the data from the Firebase database
  * and sending it to the client.
  */
-async function hpt(count = process.env.FB_DEFAULT_RECORDS) {
+async function hpt(count = Number(process.env.FB_DEFAULT_RECORDS)) {
     // Initialize the firestore DB.
     const { collection, getDocs, getFirestore, limit, orderBy, query } = require('firebase/firestore');
     const { initializeApp } = require('firebase/app');
