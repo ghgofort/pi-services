@@ -7,8 +7,10 @@
 /**
  * This function is responsible for getting the data from the Firebase database
  * and sending it to the client.
+ * @param {Object} reqData - The request parameters from the client.
+ * @param {Number} count - The number of records to return.
  */
-async function hpt(count = Number(process.env.FB_DEFAULT_RECORDS)) {
+async function hpt(params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
     // Initialize the firestore DB.
     const { collection, getDocs, getFirestore, limit, orderBy, query } = require('firebase/firestore');
     const { initializeApp } = require('firebase/app');
@@ -24,6 +26,10 @@ async function hpt(count = Number(process.env.FB_DEFAULT_RECORDS)) {
     const app = initializeApp(hptConfig);
     const db = getFirestore(app);
     let response = [];
+
+    if (params.count) {
+        count = Number(params.count);
+    }
     
     // Get data from Firestore database & send it to the client.
     try {

@@ -10,7 +10,9 @@ router.get('/', (req, res) => {
 /** API endpoint for getting all items in the HPT_Readings collection. */
 router.get('/hpt', (req, res, next) => {
   const firebaseService = require('./services/firebaseService');
-  firebaseService.hpt().then((data) => {
+  const params = req.query;
+
+  firebaseService.hpt(params).then((data) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');

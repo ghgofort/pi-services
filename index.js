@@ -11,7 +11,8 @@ const express = require('express');
 // Create an instance of express.
 const app = express();
 // Start the server.
-app.listen(3000, () => console.log('App Started...'));
+
+app.listen(3001, () => console.log('App Started...'));
 
 app.use('/', routes);
 
