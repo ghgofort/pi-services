@@ -28,10 +28,6 @@ async function getCollectionData(collectionName, params, count = Number(process.
     const db = getFirestore(app);
     let response = [];
 
-    if (params.path) {
-        hptConfig.databaseURL+=params.path;
-    }
-
     if (params.count) {
         count = Number(params.count);
     }
@@ -39,7 +35,11 @@ async function getCollectionData(collectionName, params, count = Number(process.
     // Get data from Firestore database & send it to the client.
     try {
         const hptRef = collection(db, collectionName);
-        const q = query(hptRef, orderBy('dateTimeCreated', 'desc'), limit(count));
+        let orderByField = 'dateTimeCreated';
+        if (collectionName === 'JobExperiences') {
+            orderByField = 'startDateYear';
+        }
+        const q = query(hptRef, orderBy(orderByField, 'desc'), limit(count));
         const hptSnapshot = await getDocs(q);
         hptSnapshot.forEach(doc => {
             response.push(doc.data());
