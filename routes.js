@@ -29,7 +29,7 @@ router.get('/job_experience', (req, res, next) => {
   const firebaseService = require('./services/firebaseService');
   const params = req.query;
 
-  firebaseService.getCollectionData('JobExperiences', params).then((data) => {
+  firebaseService.getCollectionData('Job_Experiences', params).then((data) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
