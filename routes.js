@@ -25,7 +25,7 @@ router.get('/hpt', (req, res, next) => {
 });
 
 /** API endpoint for getting all items in the Job_Experiences collection. */
-router.get('/Job_Experiences', (req, res, next) => {
+router.get('/job_experience', (req, res, next) => {
   const firebaseService = require('./services/firebaseService');
   const params = req.query;
 

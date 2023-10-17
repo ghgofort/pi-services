@@ -13,7 +13,7 @@ const { initializeApp } = require('firebase/app');
  * @param {Object} reqData - The request parameters from the client.
  * @param {Number} count - The number of records to return.
  */
-async function getCollectionData(collection, params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
+async function getCollectionData(collectionName, params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
     // Initialize the firestore DB.
     const hptConfig = {
         apiKey: process.env.FB_API_KEY,
@@ -38,7 +38,7 @@ async function getCollectionData(collection, params, count = Number(process.env.
     
     // Get data from Firestore database & send it to the client.
     try {
-        const hptRef = collection(db, collection);
+        const hptRef = collection(db, collectionName);
         const q = query(hptRef, orderBy('dateTimeCreated', 'desc'), limit(count));
         const hptSnapshot = await getDocs(q);
         hptSnapshot.forEach(doc => {
