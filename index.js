@@ -12,7 +12,7 @@ const express = require('express');
 const app = express();
 // Start the server.
 
-app.listen(3001, () => console.log('App Started...'));
+app.listen(3000, () => console.log('App Started...'));
 
 app.use('/', routes);
 
