@@ -36,7 +36,7 @@ async function getCollectionData(collectionName, params, count = Number(process.
     try {
         const hptRef = collection(db, collectionName);
         let orderByField = 'dateTimeCreated';
-        if (collectionName === 'JobExperiences') {
+        if (collectionName === 'Job_Experiences') {
             orderByField = 'startDateYear';
         }
         const q = query(hptRef, orderBy(orderByField, 'desc'), limit(count));
