@@ -3,17 +3,18 @@
  * Express API endpoints.
  */
 
+const { collection, getDocs, getFirestore, limit, orderBy, query } = require('firebase/firestore');
+const { initializeApp } = require('firebase/app');
 
 /**
  * This function is responsible for getting the data from the Firebase database
  * and sending it to the client.
+ * @param {string} collection - The collection to run query against.
  * @param {Object} reqData - The request parameters from the client.
  * @param {Number} count - The number of records to return.
  */
-async function hpt(params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
+async function getCollectionData(collection, params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
     // Initialize the firestore DB.
-    const { collection, getDocs, getFirestore, limit, orderBy, query } = require('firebase/firestore');
-    const { initializeApp } = require('firebase/app');
     const hptConfig = {
         apiKey: process.env.FB_API_KEY,
         authDomain: process.env.FB_AUTH_DOMAIN,
@@ -27,13 +28,17 @@ async function hpt(params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
     const db = getFirestore(app);
     let response = [];
 
+    if (params.path) {
+        hptConfig.databaseURL+=params.path;
+    }
+
     if (params.count) {
         count = Number(params.count);
     }
     
     // Get data from Firestore database & send it to the client.
     try {
-        const hptRef = collection(db, 'HPT_Readings');
+        const hptRef = collection(db, collection);
         const q = query(hptRef, orderBy('dateTimeCreated', 'desc'), limit(count));
         const hptSnapshot = await getDocs(q);
         hptSnapshot.forEach(doc => {
@@ -47,5 +52,5 @@ async function hpt(params, count = Number(process.env.FB_DEFAULT_RECORDS)) {
 }
 
 module.exports = {
-    hpt: hpt
+    getCollectionData: getCollectionData
 };
