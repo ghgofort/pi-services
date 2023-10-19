@@ -8,8 +8,7 @@ A NodeJS & express app for fetching data from Firebase storage without exposing 
     * For use with Visual Studio Code debugger you can add the environment variables to the *launch.json* file as in the following example using the configuration to your firebase > firestore database:
     ```JSON
     {
-         "configurations": [
-        {
+         "configurations": [{
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
@@ -18,17 +17,16 @@ A NodeJS & express app for fetching data from Firebase storage without exposing 
             ],
             "program": "${workspaceFolder}/index.js",
             "env": {
-                "FB_APP_ID": "<YOUR_FIRESTORE_APP_ID>",
-                "FB_API_KEY": "<YOUR_FIRESTORE_API_KEY>",
-                "FB_AUTH_DOMAIN": "<YOUR_FIRESTORE_AUTH_DOMAIN>",
-                "FB_PROJECT_ID": "<YOUR_FIRESTORE_PROJECT_ID>",
-                "FB_STORAGE_BUCKET": "<YOUR_FIRESTORE_STORAGE_BUCKET>",
-                "FB_MESSAGING_SENDER_ID": "<YOUR_FIRESTORE_MESSAGING_SENDER_ID>",
-                "FB_DATABASE_URL": "<URL_OF_FIRESTORE_INSTANCE>",
+                "FB_APP_ID": "<FIRESTORE_APP_ID>",
+                "FB_API_KEY": "<FIRESTORE_API_KEY>",
+                "FB_AUTH_DOMAIN": "<FIRESTORE_AUTH_DOMAIN>",
+                "FB_PROJECT_ID": "<FIRESTORE_PROJECT_ID>",
+                "FB_STORAGE_BUCKET": "<FIRESTORE_STORAGE_BUCKET>",
+                "FB_MESSAGING_SENDER_ID": "<FIRESTORE_MESSAGING_SENDER_ID>",
+                "FB_DATABASE_URL": "<FIRESTORE_URL>",
                 "FB_DEFAULT_RECORDS": "24"
             }
-        }
-    ]
+        }]
     }
     ```
     * If you are running the app from outside of VSCode then you need to be sure to set these in some other manner or the API calls will fail.
