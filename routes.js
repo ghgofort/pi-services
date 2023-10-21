@@ -30,6 +30,26 @@ router.get('/job_experience', (req, res, next) => {
   const params = req.query;
 
   firebaseService.getCollectionData('Job_Experiences', params).then((data) => {
+    // Now get the Highlights and assign them to the appropriate Job Experience.
+    firebaseService.getCollectionData('Highlights', params).then((highlights) => {
+      data.forEach((jobExperience) => {
+        jobExperience.highlights = [];
+        highlights.forEach((highlight) => {
+          if (highlight.jobExperienceId === jobExperience.id) {
+            jobExperience.highlights.push(highlight);
+          }
+        });
+      });
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET');
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      res.send(data);
+    }).catch((e) => {
+      console.log(e);
+    }).finally(() => {
+      next();
+    });
+
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
