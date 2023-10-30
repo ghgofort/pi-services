@@ -30,34 +30,40 @@ router.get('/job_experience', (req, res, next) => {
   const params = req.query;
 
   firebaseService.getCollectionData('Job_Experiences', params).then((data) => {
-    // Now get the Highlights and assign them to the appropriate Job Experience.
-    firebaseService.getCollectionData('Highlights', params).then((highlights) => {
+    const responseData = new Map();
+    if (data.length > 0) {
+      // Loop through job experiences & add highlights array to each.
       data.forEach((jobExperience) => {
         jobExperience.highlights = [];
-        highlights.forEach((highlight) => {
-          if (highlight.jobExperienceId === jobExperience.id) {
-            jobExperience.highlights.push(highlight);
-          }
-        });
+        responseData.set(jobExperience.ID, jobExperience);
       });
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET');
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-      res.send(data);
-    }).catch((e) => {
-      console.log(e);
-    }).finally(() => {
-      next();
-    });
+    }
+
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.send(data);
+    
+    // Now get the Highlights and add them to the response.
+    firebaseService.getCollectionData('Highlights', params).then((highlights) => {
+      if (highlights.length > 0) {
+        // Add each highlight to the appropriate job experience.
+        highlights.forEach((highlight) => {
+          if (highlight.jobExperienceId && responseData.has(highlight.jobExperienceId)) {
+            responseData.get(highlight.jobExperienceId).highlights.push(highlight);
+          } 
+        });
+      } 
+      res.send({ job_experience: Array.from(responseData.values()) });
+    }).catch((e) => {
+      console.log(e);
+      res.sendStatus(500);
+    }).finally(() => {
+      next();
+    });
   }).catch((e) => {
     console.log(e);
-  }).finally(() => {
-    next();
+    res.sendStatus(500);
   });
 });
 

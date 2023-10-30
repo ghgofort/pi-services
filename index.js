@@ -10,9 +10,11 @@ const routes = require('./routes');
 const express = require('express'); 
 // Create an instance of express.
 const app = express();
-// Start the server.
+// Get the environment variable for port.
+const port = process.env.PORT || 3000;
 
-app.listen(3000, () => console.log('App Started...'));
+// Start the server.
+app.listen(port, () => console.log('App Started...'));
 
 app.use('/', routes);
 

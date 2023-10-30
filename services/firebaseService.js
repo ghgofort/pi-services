@@ -35,10 +35,15 @@ async function getCollectionData(collectionName, params, count = Number(process.
     // Get data from Firestore database & send it to the client.
     try {
         const hptRef = collection(db, collectionName);
-        let orderByField = 'dateTimeCreated';
-        if (collectionName === 'Job_Experiences') {
+        let orderByField;
+        if (collectionName === 'HPT_Readings') {
+            orderByField = 'dateTimeCreated';
+        } else if (collectionName === 'Job_Experiences') {
             orderByField = 'startDateYear';
+        } else if (collectionName === 'Highlights') {
+            orderByField = 'description';
         }
+
         const q = query(hptRef, orderBy(orderByField, 'desc'), limit(count));
         const hptSnapshot = await getDocs(q);
         hptSnapshot.forEach(doc => {
